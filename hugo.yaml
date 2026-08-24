@@ -1,0 +1,5 @@
+baseURL: "https://emilozel.github.io/Portfolio/"
+
+caches:
+  images:
+    dir: ':cacheDir/images'

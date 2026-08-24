@@ -2,7 +2,7 @@ name: Build and deploy Hugo site
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -62,13 +62,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-
-
-baseURL: "https://yourusername.github.io/your-repository/"
-languageCode: "en-us"
-title: "My Website"
-theme: "my-theme"
-
-caches:
-  images:
-    dir: ':cacheDir/images'
