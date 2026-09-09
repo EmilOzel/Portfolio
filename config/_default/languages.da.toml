@@ -1,0 +1,8 @@
+locale = "da-DK"
+label = "Dansk"
+weight = 1
+title = "Mit udviklingsportfolio"
+
+[params]
+  description = "En udviklingslog for Package Delivery Tracker API'et."
+  dateFormat = "02-01-2006"

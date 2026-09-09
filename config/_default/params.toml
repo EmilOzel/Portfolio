@@ -1,0 +1,9 @@
+mainSections = ["log"]
+
+[homepage]
+  layout = "page"
+  showRecent = true
+  recentLimit = 10
+
+[article]
+  invertPagination = true

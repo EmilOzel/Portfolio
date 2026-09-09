@@ -1,0 +1,4 @@
+[[main]]
+  name = "Forside"
+  pageRef = "/"
+  weight = 10
