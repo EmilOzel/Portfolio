@@ -1,4 +1,6 @@
 baseURL: "https://emilozel.github.io/Portfolio/"
+locale: "da-DK"
+defaultContentLanguage: "da"
 
 caches:
   images:
