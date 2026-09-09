@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f354578-f9fb-4f58-a83f-3411e9829eb2" name="Changes" comment="setup page">
-      <change afterPath="$PROJECT_DIR$/content/log/week-03-package-tracker-update.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/description.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/project-template.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/template-meta.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/_default/module.toml" beforeDir="false" afterPath="$PROJECT_DIR$/config/_default/module.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/projects/_index.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/projects/project.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hugo.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/hugo.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/EntityRegistry.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/HibernateBaseProperties.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/HibernateConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/HibernateEmfBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/exceptions/ApiException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/utils/Utils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config" beforeDir="false" />
-    </list>
+    <list default="true" id="9f354578-f9fb-4f58-a83f-3411e9829eb2" name="Changes" comment="weekly update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -236,7 +213,7 @@
       <workItem from="1787730957257" duration="8657000" />
       <workItem from="1788250067131" duration="87000" />
       <workItem from="1788766527166" duration="1282000" />
-      <workItem from="1788942193344" duration="1104000" />
+      <workItem from="1788942193344" duration="1686000" />
     </task>
     <task id="LOCAL-00001" summary="setup page">
       <option name="closed" value="true" />
@@ -254,7 +231,23 @@
       <option name="project" value="LOCAL" />
       <updated>1787607173150</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="weekly update">
+      <option name="closed" value="true" />
+      <created>1788943345790</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1788943345791</updated>
+    </task>
+    <task id="LOCAL-00004" summary="weekly update">
+      <option name="closed" value="true" />
+      <created>1788943548958</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1788943548958</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +255,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="setup page" />
-    <option name="LAST_COMMIT_MESSAGE" value="setup page" />
+    <MESSAGE value="weekly update" />
+    <option name="LAST_COMMIT_MESSAGE" value="weekly update" />
   </component>
 </project>

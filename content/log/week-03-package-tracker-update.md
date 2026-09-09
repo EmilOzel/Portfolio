@@ -1,7 +1,7 @@
 ---
 title: "Uge 3 – Opdatering af projekt efter møde"
 date: 2026-09-04
-weight: 1
+weight: 3
 draft: false
 summary: ""
 tags: ["Java", "Maven", "Jackson", "API", "Hibernate"]
