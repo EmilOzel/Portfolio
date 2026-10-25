@@ -1,37 +1,67 @@
 ---
-title: "Uge 3 – Opdatering af projekt efter møde"
+title: "Uge 3 – Data integration"
 date: 2026-09-04
 weight: 3
 draft: false
-summary: ""
+summary: "Opsætning af projektet og integration med OpenRouteService."
 tags: ["Java", "Maven", "Jackson", "API", "Hibernate"]
 ---
 
 [⌂ Til forsiden](/Portfolio/)
 
-## Hvad tilføjede jeg i denne uge?
+## Hvad arbejdede jeg med?
 
-I denne uge begyndte jeg at implementere Package Delivery Tracker-applikationen ud fra planen fra uge 2.
+I denne uge begyndte jeg at implementere Package Delivery Tracker.
 
-Jeg konfigurerede projektet til Java 25 og oprettede en Maven-struktur med packages til:
+Jeg oprettede packages til:
 
 - Controllers
 - Services
+- DAOs
 - Entities
 - DTO'er
 - Enums
 - Exceptions
 - Konfiguration
-- Utilities
 
-Jeg begyndte også på projektets datamodel. De tre centrale entities bliver `User`, `Parcel` og `DeliveryEvent`.
-Jeg bruger navnet `Parcel` i stedet for `Package`, fordi Java allerede indeholder typen `java.lang.Package`.
+De tre centrale entities er:
 
-Jeg oprettede enums til brugerroller og pakkestatusser:
+- `User`
+- `Parcel`
+- `DeliveryEvent`
 
-```java
-public enum Role {
-    USER,
-    EMPLOYEE,
-    ADMIN
-}
+Jeg bruger navnet `Parcel`, fordi Java allerede har typen `java.lang.Package`.
+
+## OpenRouteService
+
+Jeg begyndte også på integrationen med OpenRouteService.
+
+Når en pakke oprettes, sender API'et leveringsadressen til OpenRouteService. Tjenesten returnerer en formateret adresse samt latitude og longitude.
+
+Java bruger `HttpClient` til requesten og Jackson til at oversætte JSON-svaret til et `OpenRouteDTO`.
+
+## Hvorfor bruger jeg DTO'er?
+
+DTO'er bruges til at modtage og sende data.
+
+OpenRouteServices JSON-svar indeholder mange oplysninger. Projektet bruger kun:
+
+- Den formaterede adresse
+- Latitude
+- Longitude
+
+Derfor behøver DTO'en kun at indeholde de relevante felter.
+
+## Hvad var svært?
+
+Det var svært at forstå strukturen i JSON-svaret fra OpenRouteService.
+
+Jeg skulle også være opmærksom på, at koordinaterne kommer i denne rækkefølge:
+
+```text
+longitude, latitude
+```
+
+## Hvad vil jeg arbejde videre med?
+
+Jeg vil færdiggøre databaseoperationerne og relationerne mellem projektets entities.
