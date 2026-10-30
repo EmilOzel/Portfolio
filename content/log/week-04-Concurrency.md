@@ -3,53 +3,52 @@ title: "Uge 4 – Concurrency"
 date: 2026-09-11
 weight: 4
 draft: false
-summary: "Arbejde med samtidige forbindelser og live tracking."
-tags: ["Java", "Concurrency", "WebSocket", "Javalin"]
+summary: "Arbejde med tråde, samtidige requests og databaseforbindelser."
+tags: ["Java", "Concurrency", "Javalin", "JPA"]
 ---
 
 [⌂ Til forsiden](/Portfolio/)
 
 ## Hvad arbejdede jeg med?
 
-I denne uge arbejdede jeg med concurrency.
+I denne uge arbejdede jeg med concurrency i Java.
 
-Concurrency betyder, at et program kan håndtere flere opgaver samtidig. Det er relevant i et API, fordi flere brugere kan sende requests på samme tid.
+Jeg undersøgte blandt andet:
 
-Jeg undersøgte også, hvordan WebSockets kan bruges til live tracking.
+- `Runnable`
+- `Callable`
+- Threads
+- Executors
+- `CompletableFuture`
 
-## Hvordan bruges WebSocket?
+## Hvordan er concurrency relevant for projektet?
 
-En klient kan oprette forbindelse til en bestemt pakke:
+Javalin kan behandle flere HTTP-requests samtidig. Derfor skal databasekoden kunne fungere, selvom flere brugere anvender API'et på samme tid.
 
-```text
-ws://localhost:7070/api/parcels/{trackingNumber}/live
-```
-
-Når pakkens status ændres, kan serveren sende det nye delivery event direkte til klienten.
-
-Klienten behøver derfor ikke hele tiden at spørge serveren efter nye oplysninger.
-
-## Hvordan gemmes forbindelserne?
-
-`TrackingSocket` gemmer forbindelser efter trackingnummer:
+Projektet deler én `EntityManagerFactory`, men hver DAO-metode opretter sin egen `EntityManager`.
 
 ```text
-Trackingnummer → WebSocket-forbindelser
+EntityManagerFactory
+→ opret EntityManager
+→ udfør databaseoperation
+→ luk EntityManager
 ```
 
-Jeg bruger `ConcurrentHashMap`, fordi flere forbindelser kan blive tilføjet eller fjernet samtidig.
+En `EntityManager` bliver dermed ikke delt mellem forskellige requests.
+
+## Skal projektet oprette egne threads?
+
+Jeg valgte ikke at tilføje manuel multithreading til pakkelogikken.
+
+Javalin håndterer allerede requests samtidigt, og kaldet til OpenRouteService er forholdsvis enkelt. Ekstra threads ville derfor gøre projektet sværere uden at løse et konkret problem.
 
 ## Hvad var svært?
 
-Det var vigtigt at forstå forskellen mellem:
+Det var svært at skelne mellem:
 
-- Java-koden på serveren
-- JavaScript-koden i browseren
-- Almindelige HTTP-requests
-- En vedvarende WebSocket-forbindelse
+- Concurrency i webserveren
+- Egne Java-threads
+- Databaseforbindelser
+- Asynkrone API-kald
 
-Det var også vigtigt, at routes og services bruger den samme `TrackingSocket`.
-
-## Hvad vil jeg arbejde videre med?
-
-Jeg vil koble WebSocket-funktionen sammen med pakkens statusændringer.
+Jeg lærte, at concurrency skal bruges, når der er et konkret behov, og ikke kun for at tilføje flere teknologier.

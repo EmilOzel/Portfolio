@@ -4,7 +4,7 @@ date: 2026-10-02
 weight: 7
 draft: false
 summary: "Test, fejlhåndtering og logging i Package Delivery Tracker."
-tags: ["REST", "Test", "HTTP", "Logging"]
+tags: ["REST", "Test", "JUnit", "Testcontainers"]
 ---
 
 [⌂ Til forsiden](/Portfolio/)
@@ -19,7 +19,9 @@ Jeg tilføjede:
 - Ensartede JSON-fejlbeskeder
 - Logging
 - HTTP-requesteksempler
-- Integrationstest
+- DAO-tests
+- REST-integrationstests
+- Tests af password- og JWT-funktionalitet
 
 ## Hvordan ser en fejl ud?
 
@@ -33,7 +35,7 @@ API'et sender fejl som JSON:
 }
 ```
 
-Det gør fejlene lettere at forstå for klienten.
+Det giver klienten et ensartet format, uanset hvor fejlen opstår.
 
 ## Hvilke statuskoder bruger API'et?
 
@@ -41,6 +43,8 @@ Det gør fejlene lettere at forstå for klienten.
 - `201` når noget bliver oprettet
 - `204` når noget bliver slettet
 - `400` ved ugyldige data
+- `401` når authentication mangler eller fejler
+- `403` når brugeren mangler den nødvendige rolle
 - `404` når noget ikke findes
 - `409` ved en ugyldig statusændring
 - `500` ved en intern serverfejl
@@ -48,12 +52,19 @@ Det gør fejlene lettere at forstå for klienten.
 
 ## Hvordan tester jeg API'et?
 
-Jeg bruger en `.http`-fil til at teste endpoints direkte fra IntelliJ.
+Jeg bruger en `.http`-fil til at sende requests direkte fra IntelliJ.
 
-Jeg har også forberedt integrationstest med JUnit og Testcontainers. Testcontainers kan starte en midlertidig PostgreSQL-database i Docker.
+De automatiske tests bruger:
+
+- JUnit
+- REST Assured
+- Testcontainers
+- PostgreSQL
+
+Testcontainers starter en midlertidig PostgreSQL-database i Docker. Det betyder, at testene ikke ændrer data i min normale database.
 
 ## Hvad var svært?
 
-Det var vigtigt at forstå forskellen mellem enhedstest og integrationstest.
+Det var vigtigt at forstå forskellen mellem en DAO-test og en REST-test.
 
-En integrationstest undersøger flere dele samlet, eksempelvis API, service, DAO og database.
+En DAO-test undersøger databaseadgangen. En REST-test undersøger hele flowet gennem routes, controller, service, DAO og database.

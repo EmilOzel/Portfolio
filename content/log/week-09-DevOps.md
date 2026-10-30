@@ -1,82 +1,112 @@
 ---
-title: "Uge 9 – DevOps"
+title: "Uge 9 – DevOps og deployment"
 date: 2026-10-23
 weight: 9
 draft: false
-summary: "Klargøring af Package Delivery Tracker til deployment."
-tags: ["DevOps", "Deployment", "Docker", "PostgreSQL"]
+summary: "Docker, GitHub Actions og deployment af Package Delivery Tracker."
+tags: ["DevOps", "Docker", "GitHub Actions", "DigitalOcean"]
 ---
 
 [⌂ Til forsiden](/Portfolio/)
 
 ## Hvad arbejdede jeg med?
 
-I denne uge arbejdede jeg med at gøre projektet klar til deployment.
+I denne uge gjorde jeg projektet klar til deployment og fik API'et udgivet.
 
-Applikationen bruger PostgreSQL og OpenRouteService. Databaseoplysninger og API-nøgler må derfor ikke stå direkte i Java-koden.
+Jeg arbejdede med:
+
+- Miljøvariabler
+- Maven-build
+- Docker
+- Docker Compose
+- Docker Hub
+- GitHub Actions
+- DigitalOcean
+- Caddy og HTTPS
 
 ## Miljøvariabler
 
-Projektet kan bruge miljøvariabler som:
+Databaseoplysninger, API-nøgler og JWT-hemmeligheden må ikke ligge direkte i Java-koden.
+
+Projektet bruger blandt andet:
 
 ```text
+PORT
 DB_NAME
 DB_USERNAME
 DB_PASSWORD
 CONNECTION_STR
 OPENROUTESERVICE_API_KEY
+JWT_SECRET
 HIBERNATE_DDL_AUTO
 ```
 
-Lokalt kan projektet bruge `config.properties`. Ved deployment skal oplysningerne komme fra hosting-platformen.
-
-## Build med Maven
-
-Maven bruges til at kompilere projektet og køre testene:
-
-```bash
-mvn clean test
-mvn package
-```
-
-Projektet skal kunne bygges uden fejl, før det bliver deployed.
+Lokalt kan projektet læse fra `config.properties`. I Docker og på serveren bruges miljøvariabler.
 
 ## Docker
 
-Docker kan bruges til at pakke Java-applikationen i en container.
+Projektets `Dockerfile` bruger et multi-stage build.
 
-Det giver et ensartet miljø lokalt og på serveren.
+Første trin bygger applikationen med Maven og Java 25. Andet trin opretter et mindre image, som kun indeholder Java runtime og den færdige JAR-fil.
 
-Java-applikationen og PostgreSQL bør køre som separate services.
+Docker Compose kan starte:
 
-## Logging og health check
+- Package Delivery Tracker API
+- PostgreSQL
 
-Logging bruges til at registrere fejl og vigtige hændelser.
+API'et og databasen kører som separate containers.
 
-API'et har også et health endpoint:
+## GitHub Actions
+
+Når der pushes til `main`, udfører GitHub Actions følgende:
+
+1. Henter projektet.
+2. Installerer Java 25.
+3. Kører `mvn clean verify`.
+4. Bygger et Docker-image, hvis testene består.
+5. Sender imaget til Docker Hub.
+
+Pull requests til `main` kører testjobbet, men udgiver ikke et nyt Docker-image.
+
+## Deployment
+
+API'et er deployet på en DigitalOcean Droplet.
+
+På serveren kører:
+
+- Java-API'et i en Docker-container
+- PostgreSQL i en separat container
+- Caddy som reverse proxy
+
+Caddy forbinder domænet med API-containeren og håndterer HTTPS.
+
+API'et kan tilgås på:
+
+```text
+https://api.ozeldemo.dk/api/
+```
+
+Deployment på serveren opdateres manuelt fra Docker Hub. Projektet bruger ikke Watchtower.
+
+## Health checks
+
+API'et har et simpelt endpoint:
 
 ```http
 GET /api/health
 ```
 
-Det kan bruges til at kontrollere, om serveren kører.
+Den lokale Docker Compose-konfiguration har desuden et health check til PostgreSQL. Der er ikke konfigureret et automatisk health check til API-containeren.
 
 ## Hvad var svært?
 
 Det var svært at forstå forskellen mellem:
 
-- At bygge applikationen
-- At oprette en container
-- At deploye applikationen
-- At forbinde til en produktionsdatabase
+- Maven-buildet
+- Docker-imaget
+- Docker Hub
+- Containerne på serveren
+- Domænet og Caddy
+- PostgreSQL lokalt og i produktion
 
-## Hvad vil jeg arbejde videre med?
-
-Jeg vil senere arbejde med:
-
-- GitHub Actions
-- Docker
-- Automatisk test
-- Deployment
-- En ekstern PostgreSQL-database
-- Sikre miljøvariabler
+Jeg lærte, at deployment består af flere separate trin, som tilsammen gør API'et tilgængeligt over HTTPS.

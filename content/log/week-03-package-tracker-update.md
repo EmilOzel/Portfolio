@@ -23,6 +23,7 @@ Jeg oprettede packages til:
 - Enums
 - Exceptions
 - Konfiguration
+- Security
 
 De tre centrale entities er:
 
@@ -34,7 +35,7 @@ Jeg bruger navnet `Parcel`, fordi Java allerede har typen `java.lang.Package`.
 
 ## OpenRouteService
 
-Jeg begyndte også på integrationen med OpenRouteService.
+Jeg begyndte integrationen med OpenRouteService.
 
 Når en pakke oprettes, sender API'et leveringsadressen til OpenRouteService. Tjenesten returnerer en formateret adresse samt latitude og longitude.
 
@@ -42,26 +43,28 @@ Java bruger `HttpClient` til requesten og Jackson til at oversætte JSON-svaret 
 
 ## Hvorfor bruger jeg DTO'er?
 
-DTO'er bruges til at modtage og sende data.
+DTO'er bruges til at styre de data, API'et modtager og returnerer.
 
-OpenRouteServices JSON-svar indeholder mange oplysninger. Projektet bruger kun:
+OpenRouteServices JSON-svar indeholder mange oplysninger, men projektet bruger kun:
 
 - Den formaterede adresse
 - Latitude
 - Longitude
 
-Derfor behøver DTO'en kun at indeholde de relevante felter.
+Derfor indeholder `OpenRouteDTO` kun den del af JSON-strukturen, som projektet har brug for.
 
 ## Hvad var svært?
 
 Det var svært at forstå strukturen i JSON-svaret fra OpenRouteService.
 
-Jeg skulle også være opmærksom på, at koordinaterne kommer i denne rækkefølge:
+Jeg skulle også være opmærksom på, at koordinaterne kommer i rækkefølgen:
 
 ```text
 longitude, latitude
 ```
 
+Projektet skal derfor bytte rundt på værdierne, når de gemmes som latitude og longitude.
+
 ## Hvad vil jeg arbejde videre med?
 
-Jeg vil færdiggøre databaseoperationerne og relationerne mellem projektets entities.
+Jeg vil arbejde videre med databaseoperationer og relationerne mellem projektets entities.

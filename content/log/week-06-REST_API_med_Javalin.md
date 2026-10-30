@@ -16,7 +16,9 @@ I denne uge gjorde jeg projektets funktioner tilgængelige gennem et REST API.
 Jeg oprettede:
 
 - `Routes`
+- `AuthRoutes`
 - `ParcelRoutes`
+- `AuthController`
 - `ParcelController`
 - Request- og response-DTO'er
 - Javalin-konfiguration
@@ -24,6 +26,9 @@ Jeg oprettede:
 ## Hvilke endpoints har API'et?
 
 ```text
+POST   /api/auth/register
+POST   /api/auth/login
+
 POST   /api/parcels
 GET    /api/parcels
 GET    /api/parcels/tracking/{trackingNumber}
@@ -32,7 +37,7 @@ POST   /api/parcels/{id}/events
 DELETE /api/parcels/{id}
 ```
 
-Der findes også et health endpoint:
+API'et har også et simpelt status-endpoint:
 
 ```text
 GET /api/health
@@ -51,21 +56,21 @@ Request
 → Database
 ```
 
-Controlleren læser requesten. Servicen kontrollerer reglerne. DAO'en kommunikerer med databasen.
+Routes forbinder URL'er med controller-metoder. Controlleren læser requesten, servicen kontrollerer reglerne, og DAO'en kommunikerer med databasen.
 
 ## Hvordan bruges Jackson?
 
-Jackson oversætter JSON til Java-objekter:
+Javalin og Jackson oversætter JSON til Java-objekter:
 
 ```java
 CreateParcelDTO request =
         ctx.bodyAsClass(CreateParcelDTO.class);
 ```
 
-Jackson bruges også til at sende Java-objekter tilbage som JSON.
+Jackson bruges også til at sende DTO'er tilbage til klienten som JSON.
 
 ## Hvad var svært?
 
-Det var vigtigt at holde controlleren enkel.
+Det var vigtigt at holde controllerne enkle.
 
-Forretningsregler skal ikke ligge i controlleren. De skal ligge i servicen, så de er lettere at teste og genbruge.
+Forretningsreglerne ligger derfor i serviceklasserne i stedet for controllerne. Det gør ansvarsfordelingen tydeligere og reglerne lettere at teste.

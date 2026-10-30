@@ -18,6 +18,7 @@ Jeg arbejdede med:
 - JPA og Hibernate
 - DAO-klasser
 - PostgreSQL
+- Relationer mellem entities
 - Transaktioner
 - Forretningsregler
 
@@ -25,18 +26,19 @@ Jeg oprettede `UserDAO` og `ParcelDAO`.
 
 ## Hvad gør DAO-klasserne?
 
-DAO-klasserne står for kommunikationen med databasen.
+DAO-klasserne håndterer kommunikationen med databasen.
 
-`UserDAO` kan blandt andet:
+`UserDAO` kan:
 
 - Oprette en bruger
 - Finde en bruger efter id
 - Finde en bruger efter e-mail
 
-`ParcelDAO` kan blandt andet:
+`ParcelDAO` kan:
 
 - Oprette en pakke
 - Hente pakker
+- Hente pakker efter ejer
 - Oprette delivery events
 - Opdatere pakkestatus
 - Slette en pakke
@@ -51,27 +53,28 @@ Opret pakke
 → Gem begge ændringer
 ```
 
-Hvis noget fejler, bliver hele handlingen rullet tilbage.
+Hvis noget fejler, bliver transaktionen rullet tilbage. Det forhindrer, at databasen gemmer en pakke uden dens første event.
 
 ## Hvilke regler tilføjede jeg?
 
-Jeg tilføjede regler for statusændringer.
+Jeg tilføjede regler for gyldige statusændringer.
 
-Eksempel:
+Eksempler:
 
 ```text
 CREATED → PICKED_UP
 PICKED_UP → IN_TRANSIT
 IN_TRANSIT → AT_SORTING_CENTER
+AT_SORTING_CENTER → OUT_FOR_DELIVERY
 OUT_FOR_DELIVERY → DELIVERED
 ```
 
-En leveret pakke kan ikke ændres tilbage til en tidligere status.
+En leveret eller annulleret pakke kan ikke ændres til en ny status.
 
-En pakke kan kun slettes, mens status er `CREATED`.
+En pakke kan kun slettes, mens dens status er `CREATED`.
 
 ## Hvad var svært?
 
 Det var svært at afgøre, hvad der skulle ligge i DAO'en, og hvad der skulle ligge i servicen.
 
-Jeg valgte, at DAO'en håndterer databasen, mens servicen håndterer validering og forretningsregler.
+Jeg valgte, at DAO'en håndterer databaseoperationerne, mens servicen håndterer validering, adgangskontrol og forretningsregler.
