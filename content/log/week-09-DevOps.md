@@ -76,7 +76,6 @@ På serveren kører:
 
 - Java-API'et i en Docker-container
 - PostgreSQL i en separat container
-- Caddy som reverse proxy
 
 Caddy forbinder domænet med API-containeren og håndterer HTTPS.
 
